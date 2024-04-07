@@ -1,0 +1,57 @@
+name: 'Test: Verify application deployment'
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  verify-application-deployment:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: 'Checkout codebase'
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 'Setup Gradle'
+      uses: gradle/actions/setup-gradle@v3
+
+    - name: 'Build Docker image'
+      run: ./application/code/gradlew -p ./application/code build-docker --info
+
+    - name: 'Setup Helm'
+      uses: azure/setup-helm@v4.1.0
+      with:
+        version: v3.13.3
+
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.21.9'
+
+    - name: Setup Kind
+      run: go install sigs.k8s.io/kind@v0.22.0
+
+    - name: Create K8s cluster
+      run: kind create cluster --config .github/kind.yaml
+
+    - name: Install Ingress Controller
+      run: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
+    - name: Load Docker image in Kind
+      run: kind load docker-image handsonarchitects/knotx-demo-application
+
+    - name: Wait for Ingress Controller
+      run: kubectl -n ingress-nginx rollout status deployment ingress-nginx-controller
+
+    - name: Install knotx
+      run: helm install knotx ./application/chart
+
+    - name: Wait for Ingress Controller
+      run: kubectl rollout status deployment knotx
+    
+    - name: Check api
+      run: curl http://127.0.0.1.nip.io/api/v1/example

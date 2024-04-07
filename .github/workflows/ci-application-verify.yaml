@@ -1,0 +1,39 @@
+name: 'Test: Verify application'
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  verify-application:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: 'Checkout codebase'
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 'Setup Gradle'
+      uses: gradle/actions/setup-gradle@v3
+
+    - name: 'Build & verify code'
+      run: ./application/code/gradlew -p ./application/code build --info
+  verify-chart:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: 'Checkout codebase'
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 'Setup Helm'
+      uses: azure/setup-helm@v4.1.0
+      with:
+        version: v3.13.3
+
+    - name: 'Verify chart'
+      run: helm template --output-dir generated test ./application/chart
