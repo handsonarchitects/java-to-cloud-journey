@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/creditcard/allowed"
+  },
+  "response": {
+    "status": 200,
+    "fixedDelayMilliseconds": 100,
+    "bodyFileName": "creditcard.json",
+    "headers": {
+        "Content-Type": "application/json"
+    }
+  }
+}

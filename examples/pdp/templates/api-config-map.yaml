@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapi-mocks-mappings
+data:
+{{ (.Files.Glob "webapi/mappings/*.json").AsConfig | indent 2 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapi-mocks-files
+data:
+{{ (.Files.Glob "webapi/__files/*.json").AsConfig | indent 2 }}

@@ -9,3 +9,19 @@ cms:
     - name: content
       mountPath: /usr/share/nginx/html/content
       readOnly: true
+
+webapi:
+  volumes:
+    - name: webapi-mappings
+      configMap:
+        name: webapi-mocks-mappings
+    - name: webapi-files
+      configMap:
+        name: webapi-mocks-files
+  volumeMounts:
+    - name: webapi-mappings
+      mountPath: /home/wiremock/mappings
+      readOnly: true
+    - name: webapi-files
+      mountPath: /home/wiremock/__files
+      readOnly: true
