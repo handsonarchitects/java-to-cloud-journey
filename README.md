@@ -13,3 +13,17 @@ If you have any questions, suggestions, or feedback, feel free to open an [discu
 Thank you for exploring our example repository!
 
 — [HandsOnArchitects.com](https://handsonarchitects.com/)
+
+## Quick Start
+
+> Prerequisites: Docker, Java 11, Kind, Kubectl
+
+1. Clone the repository
+2. Create a Kubernetes cluster using Kind by running 
+   ```bash
+   demo/setup-kind.sh
+   ```
+3. Build the application and deploy the demo to the Kubernetes cluster by running
+   ```bash
+   demo/deploy.sh -b
+   ```

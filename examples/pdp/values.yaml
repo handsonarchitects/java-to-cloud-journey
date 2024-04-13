@@ -1,5 +1,8 @@
 # Example application that serves a simple Product Detail Page (PDP)
 
+ingress:
+  host: demo.127.0.0.1.nip.io
+
 cms:
   volumes:
     - name: content
@@ -9,6 +12,19 @@ cms:
     - name: content
       mountPath: /usr/share/nginx/html/content
       readOnly: true
+
+dam:
+  volumes:
+    - name: content
+      configMap:
+        name: dam-content
+  volumeMounts:
+    - name: content
+      mountPath: /usr/share/nginx/html/assets
+      readOnly: true
+  service:
+    type: ClusterIP
+    port: 80
 
 webapi:
   volumes:
@@ -25,3 +41,10 @@ webapi:
     - name: webapi-files
       mountPath: /home/wiremock/__files
       readOnly: true
+
+knotx:
+  ingress:
+    enabled: false
+  service:
+    type: ClusterIP
+    port: 80

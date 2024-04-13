@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: cms-content
 data:
-{{ (.Files.Glob "content/*.html").AsConfig | indent 2 }}
+{{ (.Files.Glob "demo/cms/*.html").AsConfig | indent 2 }}
