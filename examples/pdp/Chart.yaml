@@ -1,0 +1,12 @@
+apiVersion: v2
+name: pdp
+description: A Helm chart for Kubernetes that runs a simple PDP example
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+dependencies:
+  # FixMe: consider moving Knot.x chart to subcharts directory (similar as the CMS chart)
+  - name: knotx
+    version: 0.1.0
+    repository: file://../../application/chart

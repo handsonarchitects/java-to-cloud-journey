@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cms-content
+data:
+{{ (.Files.Glob "content/*.html").AsConfig | indent 2 }}

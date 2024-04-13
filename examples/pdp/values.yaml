@@ -1,0 +1,11 @@
+# Example application that serves a simple Product Detail Page (PDP)
+
+cms:
+  volumes:
+    - name: content
+      configMap:
+        name: cms-content
+  volumeMounts:
+    - name: content
+      mountPath: /usr/share/nginx/html/content
+      readOnly: true

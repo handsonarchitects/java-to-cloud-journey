@@ -1,0 +1,6 @@
+dependencies:
+- name: knotx
+  repository: file://../../application/chart
+  version: 0.1.0
+digest: sha256:3ef496b51072028ad99f4a831a6ba56c1c057c67b0d83ca30f7cf2f49e9413b4
+generated: "2024-04-13T14:23:07.003749+02:00"

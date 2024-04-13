@@ -42,3 +42,15 @@ paths:
           description: At least one procedure has reported a non-healthy stat
         '500':
           description: One procedure has thrown an error or has not reported a status in time
+  /content/*:
+    get:
+      operationId: content-get
+      responses:
+        default:
+          description: Remote repository template processing with http action and te
+  /assets/*:
+    get:
+      operationId: assets-get
+      responses:
+        default:
+          description: Return assets as is from the repository
