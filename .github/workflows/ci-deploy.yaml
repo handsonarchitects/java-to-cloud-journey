@@ -1,4 +1,4 @@
-name: 'Test: Verify application deployment'
+name: 'Test: Verify deployment'
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  verify-application-deployment:
+  verify-deployment:
     runs-on: ubuntu-latest
     steps:
 
@@ -47,11 +47,33 @@ jobs:
     - name: Wait for Ingress Controller
       run: kubectl -n ingress-nginx rollout status deployment ingress-nginx-controller
 
-    - name: Install knotx
-      run: helm install knotx ./application/chart
+    - name: Create pdp namespace
+      run: kubectl create namespace pdp
 
-    - name: Wait for Ingress Controller
-      run: kubectl rollout status deployment knotx
+    - name: Install pdp example
+      run: helm -n pdp install pdp ./examples/pdp
+
+    - name: Wait for pdp example
+      run:
+        kubectl -n pdp rollout status deployment
     
-    - name: Check api
-      run: curl http://127.0.0.1.nip.io/api/v1/example
+    - name: Check API
+      uses: nick-fields/retry@v2
+      with:
+        timeout_minutes: 5
+        max_attempts: 3
+        command: curl -i http://demo.127.0.0.1.nip.io/api/v1/example | grep "HTTP/1.1 200"
+
+    - name: Check page
+      uses: nick-fields/retry@v2
+      with:
+        timeout_minutes: 5
+        max_attempts: 3
+        command: curl -i http://demo.127.0.0.1.nip.io/content/index.html | grep "HTTP/1.1 200"
+
+    - name: Check assets
+      uses: nick-fields/retry@v2
+      with:
+        timeout_minutes: 5
+        max_attempts: 3
+        command: curl -i http://demo.127.0.0.1.nip.io/assets/knotx-logo.png | grep "HTTP/1.1 200"
