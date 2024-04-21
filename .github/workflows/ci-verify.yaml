@@ -1,4 +1,4 @@
-name: 'Test: Verify application'
+name: 'Test: Verify build'
 
 on:
   pull_request:
@@ -36,4 +36,4 @@ jobs:
         version: v3.13.3
 
     - name: 'Verify chart'
-      run: helm template --output-dir generated test ./application/chart
+      run: helm template --output-dir generated test ./examples/pdp

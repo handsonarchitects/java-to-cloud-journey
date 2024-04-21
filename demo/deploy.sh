@@ -13,7 +13,6 @@ fi
 
 kubectl create namespace pdp || true
 
-helm dependency update examples/pdp
 helm -n pdp upgrade --install pdp examples/pdp
 
 kubectl -n pdp rollout status deployment
