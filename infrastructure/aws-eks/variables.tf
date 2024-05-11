@@ -8,6 +8,11 @@ variable "cluster_name" {
     description = "Name of the EKS cluster"
 }
 
+variable "cluster_version" {
+    type = string
+    description = "Version of the EKS cluster"
+}
+
 variable "availibilty_zone_1" {
     type = string
     description = "First availibility zone"

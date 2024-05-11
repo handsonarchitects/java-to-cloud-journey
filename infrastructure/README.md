@@ -8,10 +8,15 @@ This directory contains the infrastructure code for the project.
 
 This module contains the Terraform code for creating an EKS cluster on AWS.
 
-EKS uses Fargate for running the pods, so there is no need to create EC2 instances for the cluster.
+EKS spin up the control plane and worker nodes in the private subnets. The worker nodes are managed by Node Group, which is a group of EC2 instances.
 
-Check [Create AWS EKS Fargate Using Terraform](https://antonputra.com/amazon/create-aws-eks-fargate-using-terraform/
-) for more detailed technical information.
+#### Kubectl Context
+
+After creating the EKS cluster, you need to update the `kubeconfig` file to use the new cluster. You can do this by running the following command:
+
+```bash
+aws eks --region eu-central-1 update-kubeconfig --name jug-demo-eks
+```
 
 ### `tf-state`
 

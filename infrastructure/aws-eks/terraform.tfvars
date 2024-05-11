@@ -1,5 +1,6 @@
 region = "eu-central-1"
 cluster_name = "jug-demo-eks"
+cluster_version = "1.29"
 availibilty_zone_1 = "eu-central-1a"
 availibilty_zone_2 = "eu-central-1b"
 vpc_cidr = "10.0.0.0/16"
