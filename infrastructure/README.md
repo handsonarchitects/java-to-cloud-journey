@@ -132,7 +132,7 @@ kubectl get pods -n kube-system
 More details can be found [here](https://docs.aws.amazon.com/eks/latest/userguide/lbc-helm.html).
 
 
-### Verify the ALB Ingress Controller
+### Verify the ALB Ingress Controller witn Internal Load Balancer
 
 Verify with this [example](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html#application-load-balancer-sample-application). Follow the steps with the `2048` game and private subnets.
 
@@ -143,6 +143,15 @@ ssh -i bastion-ssh-key ubuntu@ec2-3-70-134-48.eu-central-1.compute.amazonaws.com
 and run:
 ```bash
 curl internal-k8s-game2048...
+```
+
+## Verify the ALB Ingress Controller with External Load Balancer
+
+Verify with this [example](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html#application-load-balancer-sample-application). Follow the steps with the `2048` game and public subnets.
+
+Then check using Load Balancer DNS name and access the game with the following URL:
+```bash
+curl k8s-game2048
 ```
 
 ## Clean up
