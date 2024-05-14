@@ -104,11 +104,6 @@ resource "aws_eks_node_group" "node-grp" {
   disk_size       = 20
   instance_types  = ["t2.small"]
 
-  # remote_access {
-  #   ec2_ssh_key               = "mumbai-kp"
-  #   source_security_group_ids = [aws_security_group.allow_tls.id]
-  # }
-
   labels = {
     "Application" = "Jug"
     "Environment" = "Demo"

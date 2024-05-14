@@ -51,11 +51,29 @@ variable "private_subnet_2" {
 variable "default_tags" {
     type = map
     default = {
-        Application = "Cleeng"
+        Application = "JUG"
         Environment = "Demo"
     }
 }
 
 variable "container_port" {
   description = "Port that needs to be exposed for the application"
+}
+
+# bastion
+
+variable "PRIVATE_KEY" {
+  default = "bastion-ssh-key"
+}
+
+variable "PUBLIC_KEY" {
+  default = "bastion-ssh-key.pub"
+}
+
+variable "AMIS" {
+  type = map(string)
+  default = {
+    eu-central = "ami-01e444924a2233b07"
+    eu-central-2 = "ami-01e444924a2233b07"
+  }
 }

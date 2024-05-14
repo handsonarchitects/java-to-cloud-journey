@@ -6,6 +6,13 @@ terraform {
       version = "~> 5.1.0"
     }
   }
+
+  backend "s3" {
+    bucket         = "2024-jug-terraform-state"
+    key            = "terraform.tfstate"
+    region         = "eu-central-1"
+    dynamodb_table = "2024-jug-terraform-state-locks"
+  }
 }
 
 provider "aws" {

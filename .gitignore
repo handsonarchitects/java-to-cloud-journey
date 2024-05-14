@@ -39,3 +39,9 @@ generated/
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
+
+iam-policy.json
+bastion-ssh-key
+bastion-ssh-key.pub
+
+2048_full.yaml
