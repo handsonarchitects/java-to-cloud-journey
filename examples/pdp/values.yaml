@@ -2,6 +2,10 @@
 
 ingress:
   host: demo.127.0.0.1.nip.io
+  class: nginx
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
 
 cms:
   volumes:

@@ -62,7 +62,6 @@ To create the EKS cluster, you need to run the following commands:
 
 ```bash
 cd aws-eks
-ssh-keygen -f bastion-ssh-key
 terraform init
 terraform apply
 ```
@@ -131,27 +130,22 @@ kubectl get pods -n kube-system
 
 More details can be found [here](https://docs.aws.amazon.com/eks/latest/userguide/lbc-helm.html).
 
+## Deploying PDP Application
 
-### Verify the ALB Ingress Controller witn Internal Load Balancer
+First you need to push the Docker image to your Hub Docker repository. You can use the following commands:
 
-Verify with this [example](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html#application-load-balancer-sample-application). Follow the steps with the `2048` game and private subnets.
-
-Then check your bastion host public IP address and access the game with the following URL:
 ```bash
-ssh -i bastion-ssh-key ubuntu@ec2-3-70-134-48.eu-central-1.compute.amazonaws.com
-```
-and run:
-```bash
-curl internal-k8s-game2048...
+docker login
+docker tag handsonarchitects/knotx-demo-application:latest tomaszmichalak/knotx-jug-demo-application:latest
+docker push tomaszmichalak/knotx-jug-demo-application:latest
 ```
 
-## Verify the ALB Ingress Controller with External Load Balancer
+Then you need to update run Helm chart to deploy the application to the EKS cluster.
 
-Verify with this [example](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html#application-load-balancer-sample-application). Follow the steps with the `2048` game and public subnets.
-
-Then check using Load Balancer DNS name and access the game with the following URL:
 ```bash
-curl k8s-game2048
+kubectl create namespace pdp || true
+helm -n pdp upgrade --install pdp ../examples/pdp --set knotx.image.repository=tomaszmichalak/knotx-jug-demo-application --set ingress.class=alb --set ingress.host=""
+kubectl -n pdp rollout status deployment
 ```
 
 ## Clean up

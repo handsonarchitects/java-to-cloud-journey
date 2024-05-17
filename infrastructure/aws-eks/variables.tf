@@ -59,21 +59,3 @@ variable "default_tags" {
 variable "container_port" {
   description = "Port that needs to be exposed for the application"
 }
-
-# bastion
-
-variable "PRIVATE_KEY" {
-  default = "bastion-ssh-key"
-}
-
-variable "PUBLIC_KEY" {
-  default = "bastion-ssh-key.pub"
-}
-
-variable "AMIS" {
-  type = map(string)
-  default = {
-    eu-central = "ami-01e444924a2233b07"
-    eu-central-2 = "ami-01e444924a2233b07"
-  }
-}
