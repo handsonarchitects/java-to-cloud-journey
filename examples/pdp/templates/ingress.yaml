@@ -16,14 +16,14 @@ spec:
         path: "/content"
         backend:
           service:
-            name: {{ include "cms.fullname" . }}-knotx
+            name: {{ include "knotx.fullname" . }}-knotx
             port:
               number: {{ .Values.knotx.service.port }}
       - pathType: ImplementationSpecific
         path: "/api"
         backend:
           service:
-            name: {{ include "cms.fullname" . }}-knotx
+            name: {{ include "knotx.fullname" . }}-knotx
             port:
               number: {{ .Values.knotx.service.port }}
       - pathType: ImplementationSpecific
