@@ -1,0 +1,26 @@
+ingress:
+  host: ""
+  class: alb
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+  paths:
+    - pathType: ImplementationSpecific
+      path: "/content/*"
+      serviceName: knotx
+      servicePort: 80
+    - pathType: ImplementationSpecific
+      path: "/api/*"
+      serviceName: knotx
+      servicePort: 80
+    - pathType: ImplementationSpecific
+      path: "/assets/*"
+      serviceName: dam
+      servicePort: 80
+
+knotx:
+  image:
+    repository: tomaszmichalak/knotx-jug-demo-application
+  service:
+    annotations:
+      alb.ingress.kubernetes.io/healthcheck-path: /healthcheck

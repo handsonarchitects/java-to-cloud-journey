@@ -3,9 +3,19 @@
 ingress:
   host: demo.127.0.0.1.nip.io
   class: nginx
-  annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
+  paths:
+    - pathType: ImplementationSpecific
+      path: "/content"
+      serviceName: knotx
+      servicePort: 80
+    - pathType: ImplementationSpecific
+      path: "/api"
+      serviceName: knotx
+      servicePort: 80
+    - pathType: ImplementationSpecific
+      path: "/assets"
+      serviceName: dam
+      servicePort: 80
 
 cms:
   volumes:
