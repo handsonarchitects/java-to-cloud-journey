@@ -12,24 +12,12 @@ spec:
   - host: {{ .Values.ingress.host }}
     http:
       paths:
-      - pathType: ImplementationSpecific
-        path: "/content/*"
+      {{- range .Values.ingress.paths }}
+      - pathType: {{ .pathType }}
+        path: "{{ .path }}"
         backend:
           service:
-            name: {{ include "knotx.fullname" . }}-knotx
+            name: {{ include (printf "%s.fullname" .serviceName) $ }}-{{ .serviceName }}
             port:
-              number: {{ .Values.knotx.service.port }}
-      - pathType: ImplementationSpecific
-        path: "/api/*"
-        backend:
-          service:
-            name: {{ include "knotx.fullname" . }}-knotx
-            port:
-              number: {{ .Values.knotx.service.port }}
-      - pathType: ImplementationSpecific
-        path: "/assets/*"
-        backend:
-          service:
-            name: {{ include "dam.fullname" . }}-dam
-            port:
-              number: {{ .Values.dam.service.port }}
+              number: {{ .servicePort }}
+      {{- end }}
