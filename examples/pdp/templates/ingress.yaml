@@ -13,21 +13,21 @@ spec:
     http:
       paths:
       - pathType: ImplementationSpecific
-        path: "/content"
+        path: "/content/*"
         backend:
           service:
             name: {{ include "knotx.fullname" . }}-knotx
             port:
               number: {{ .Values.knotx.service.port }}
       - pathType: ImplementationSpecific
-        path: "/api"
+        path: "/api/*"
         backend:
           service:
             name: {{ include "knotx.fullname" . }}-knotx
             port:
               number: {{ .Values.knotx.service.port }}
       - pathType: ImplementationSpecific
-        path: "/assets"
+        path: "/assets/*"
         backend:
           service:
             name: {{ include "dam.fullname" . }}-dam

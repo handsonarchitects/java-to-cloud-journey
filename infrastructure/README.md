@@ -144,7 +144,7 @@ Then you need to update run Helm chart to deploy the application to the EKS clus
 
 ```bash
 kubectl create namespace pdp || true
-helm -n pdp upgrade --install pdp ../examples/pdp --set knotx.image.repository=tomaszmichalak/knotx-jug-demo-application --set ingress.class=alb --set ingress.host=""
+helm -n pdp upgrade --install pdp ../../examples/pdp --set knotx.image.repository=tomaszmichalak/knotx-jug-demo-application --set ingress.class=alb --set ingress.host=""
 kubectl -n pdp rollout status deployment
 ```
 

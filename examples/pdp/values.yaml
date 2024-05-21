@@ -50,5 +50,7 @@ knotx:
   ingress:
     enabled: false
   service:
+    annotations:
+      alb.ingress.kubernetes.io/healthcheck-path: /healthcheck
     type: ClusterIP
     port: 80
