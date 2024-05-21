@@ -148,6 +148,29 @@ helm -n pdp upgrade --install pdp ../../examples/pdp --values ../../examples/pdp
 kubectl -n pdp rollout status deployment
 ```
 
+## Update Root user mapping
+To allow the root user to access the EKS cluster, you need to update the `aws-auth` ConfigMap. You can do this by running the following command:
+
+```bash
+kubectl edit configmap aws-auth -n kube-system
+```
+
+and add the following:
+
+```yaml
+apiVersion: v1
+data:
+  mapRoles: |
+    ...
+  mapUsers: |
+    - userarn: arn:aws:iam::610929429946:root
+      groups:
+      - system:masters
+...
+```
+
+More details can be found [here](https://stackoverflow.com/questions/70787520/your-current-user-or-role-does-not-have-access-to-kubernetes-objects-on-this-eks).
+
 ## Clean up
 
 1. Uninstall all k8s resources
